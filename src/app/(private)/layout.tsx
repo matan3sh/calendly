@@ -10,7 +10,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
         <nav className="font-medium flex items-center text-sm gap-6 container">
           <div className="flex items-center gap-2 font-semibold mr-auto">
             <CalendarRange className="size-6" />
-            <span className="sr-only md:not-sr-only">Calendor</span>
+            <span className="sr-only md:not-sr-only">Calendly</span>
           </div>
           <NavLink href="/events">Events</NavLink>
           <NavLink href="/schedule">Schedule</NavLink>

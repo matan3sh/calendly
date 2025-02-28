@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-// import { db } from '@/drizzle/db'
+import { db } from '@/drizzle/db'
 import { formatEventDescription } from '@/lib/formatters'
 import { cn } from '@/lib/utils'
 import { auth } from '@clerk/nextjs/server'
@@ -22,11 +22,10 @@ export default async function EventsPage() {
 
   if (userId == null) return redirectToSignIn()
 
-  // const events = await db.query.EventTable.findMany({
-  //   where: ({ clerkUserId }, { eq }) => eq(clerkUserId, userId),
-  //   orderBy: ({ createdAt }, { desc }) => desc(createdAt),
-  // })
-  const events = []
+  const events = await db.query.EventTable.findMany({
+    where: ({ clerkUserId }, { eq }) => eq(clerkUserId, userId),
+    orderBy: ({ createdAt }, { desc }) => desc(createdAt),
+  })
 
   return (
     <>
