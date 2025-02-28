@@ -12,6 +12,7 @@ export default async function EditEventPage({
   params: { eventId: string }
 }) {
   const { userId, redirectToSignIn } = await auth()
+
   if (userId == null) return redirectToSignIn()
 
   const event = await db.query.EventTable.findFirst({

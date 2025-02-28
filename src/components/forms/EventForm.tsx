@@ -1,7 +1,7 @@
 'use client'
 
 import { eventFormSchema } from '@/schema/events'
-import { createEvent, updateEvent } from '@/server/actions/event'
+import { createEvent, deleteEvent, updateEvent } from '@/server/actions/events'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useTransition } from 'react'
@@ -50,6 +50,19 @@ export function EventForm({ event }: EventFormProps) {
       durationInMinutes: 30,
     },
   })
+
+  const handleDelete = () => {
+    startDeleteTransition(async () => {
+      if (event?.id == null) return
+
+      const data = await deleteEvent(event.id)
+      if (data?.error) {
+        form.setError('root', {
+          message: 'There was an error deleting your event',
+        })
+      }
+    })
+  }
 
   async function onSubmit(values: z.infer<typeof eventFormSchema>) {
     const action =
@@ -155,7 +168,7 @@ export function EventForm({ event }: EventFormProps) {
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button
-                  variant="destructive"
+                  variant="destructiveGhost"
                   disabled={isDeletePending || form.formState.isSubmitting}
                 >
                   Delete
@@ -174,16 +187,7 @@ export function EventForm({ event }: EventFormProps) {
                   <AlertDialogAction
                     disabled={isDeletePending || form.formState.isSubmitting}
                     // variant="destructive"
-                    onClick={() => {
-                      startDeleteTransition(async () => {
-                        // const data = await deleteEvent(event.id)
-                        // if (data?.error) {
-                        // form.setError('root', {
-                        //   message: 'There was an error deleting your event',
-                        // })
-                        // }
-                      })
-                    }}
+                    onClick={handleDelete}
                   >
                     Delete
                   </AlertDialogAction>
