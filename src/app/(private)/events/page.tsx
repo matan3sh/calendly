@@ -61,7 +61,7 @@ export default async function EventsPage() {
   )
 }
 
-type EventCardProps = {
+interface EventCardProps {
   id: string
   isActive: boolean
   name: string

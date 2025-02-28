@@ -1,7 +1,7 @@
 'use client'
 
 import { eventFormSchema } from '@/schema/events'
-import { createEvent } from '@/server/actions/event'
+import { createEvent, updateEvent } from '@/server/actions/event'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useTransition } from 'react'
@@ -31,9 +31,8 @@ import {
 import { Input } from '../ui/input'
 import { Switch } from '../ui/switch'
 import { Textarea } from '../ui/textarea'
-export function EventForm({
-  event,
-}: {
+
+interface EventFormProps {
   event?: {
     id: string
     name: string
@@ -41,7 +40,8 @@ export function EventForm({
     durationInMinutes: number
     isActive: boolean
   }
-}) {
+}
+export function EventForm({ event }: EventFormProps) {
   const [isDeletePending, startDeleteTransition] = useTransition()
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
@@ -52,7 +52,10 @@ export function EventForm({
   })
 
   async function onSubmit(values: z.infer<typeof eventFormSchema>) {
-    const data = await createEvent(values)
+    const action =
+      event == null ? createEvent : updateEvent.bind(null, event.id)
+    const data = await action(values)
+
     if (data?.error) {
       form.setError('root', {
         message: 'There was an error saving your event',
