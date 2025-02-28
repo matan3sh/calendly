@@ -34,14 +34,14 @@ type Availability = {
   dayOfWeek: (typeof DAYS_OF_WEEK_IN_ORDER)[number]
 }
 
-export function ScheduleForm({
-  schedule,
-}: {
+interface ScheduleFormProps {
   schedule?: {
     timezone: string
     availabilities: Availability[]
   }
-}) {
+}
+
+export function ScheduleForm({ schedule }: ScheduleFormProps) {
   const [successMessage, setSuccessMessage] = useState<string>()
   const form = useForm<z.infer<typeof scheduleFormSchema>>({
     resolver: zodResolver(scheduleFormSchema),
@@ -91,6 +91,7 @@ export function ScheduleForm({
         {successMessage && (
           <div className="text-green-500 text-sm">{successMessage}</div>
         )}
+        {/* Timezone */}
         <FormField
           control={form.control}
           name="timezone"
@@ -117,6 +118,7 @@ export function ScheduleForm({
           )}
         />
 
+        {/* Availability */}
         <div className="grid grid-cols-[auto,1fr] gap-y-6 gap-x-4">
           {DAYS_OF_WEEK_IN_ORDER.map((dayOfWeek) => (
             <Fragment key={dayOfWeek}>
@@ -215,6 +217,7 @@ export function ScheduleForm({
           ))}
         </div>
 
+        {/* Save Button */}
         <div className="flex gap-2 justify-end">
           <Button disabled={form.formState.isSubmitting} type="submit">
             Save
