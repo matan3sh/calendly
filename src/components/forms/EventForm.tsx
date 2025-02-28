@@ -186,7 +186,7 @@ export function EventForm({ event }: EventFormProps) {
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction
                     disabled={isDeletePending || form.formState.isSubmitting}
-                    // variant="destructive"
+                    variant="destructive"
                     onClick={handleDelete}
                   >
                     Delete
