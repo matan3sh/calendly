@@ -28,7 +28,7 @@ export default async function BookEventPage(props: BookEventPageProps) {
 
   if (event == null) return notFound()
 
-  const calendarUser = await (await clerkClient()).users.getUser(clerkUserId)
+  const calendarUser = await clerkClient().users.getUser(clerkUserId)
 
   const validTimes = []
 

@@ -30,7 +30,7 @@ export default async function BookingPage(props: BookingPageProps) {
 
   if (events.length === 0) return notFound()
 
-  const { fullName } = await (await clerkClient()).users.getUser(clerkUserId)
+  const { fullName } = await clerkClient().users.getUser(clerkUserId)
 
   return (
     <div className="max-w-5xl mx-auto">
