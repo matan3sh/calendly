@@ -8,7 +8,14 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { db } from '@/drizzle/db'
+import { getValidTimesFromSchedule } from '@/lib/getValidTimesFromSchedule'
 import { clerkClient } from '@clerk/nextjs/server'
+import {
+  addMonths,
+  eachMinuteOfInterval,
+  endOfDay,
+  roundToNearestMinutes,
+} from 'date-fns'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
@@ -30,7 +37,16 @@ export default async function BookEventPage(props: BookEventPageProps) {
 
   const calendarUser = await clerkClient().users.getUser(clerkUserId)
 
-  const validTimes = []
+  const startDate = roundToNearestMinutes(new Date(), {
+    nearestTo: 15,
+    roundingMethod: 'ceil',
+  })
+  const endDate = endOfDay(addMonths(startDate, 2))
+
+  const validTimes = await getValidTimesFromSchedule(
+    eachMinuteOfInterval({ start: startDate, end: endDate }, { step: 15 }),
+    event
+  )
 
   if (validTimes.length === 0) {
     return <NoTimeSlots event={event} calendarUser={calendarUser} />
