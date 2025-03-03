@@ -1,3 +1,4 @@
+import { MeetingForm } from '@/components/forms/MeetingForm'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -62,7 +63,13 @@ export default async function BookEventPage(props: BookEventPageProps) {
           <CardDescription>{event.description}</CardDescription>
         )}
       </CardHeader>
-      <CardContent>Meeting Form</CardContent>
+      <CardContent>
+        <MeetingForm
+          validTimes={validTimes}
+          eventId={event.id}
+          clerkUserId={clerkUserId}
+        />
+      </CardContent>
     </Card>
   )
 }
