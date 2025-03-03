@@ -1,7 +1,7 @@
 import { clerkClient } from '@clerk/nextjs/server'
 import { endOfDay, startOfDay } from 'date-fns'
 import { google } from 'googleapis'
-import 'use server'
+import 'use-server'
 
 export async function getCalendarEventTimes(
   clerkUserId: string,
