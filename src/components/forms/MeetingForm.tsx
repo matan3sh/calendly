@@ -84,6 +84,8 @@ export function MeetingForm({
             {form.formState.errors.root.message}
           </div>
         )}
+
+        {/* Timezone */}
         <FormField
           control={form.control}
           name="timezone"
@@ -109,7 +111,9 @@ export function MeetingForm({
             </FormItem>
           )}
         />
+
         <div className="flex gap-4 flex-col md:flex-row">
+          {/* Date */}
           <FormField
             control={form.control}
             name="date"
@@ -153,6 +157,8 @@ export function MeetingForm({
               </Popover>
             )}
           />
+
+          {/* Time */}
           <FormField
             control={form.control}
             name="startTime"
@@ -197,6 +203,7 @@ export function MeetingForm({
           />
         </div>
         <div className="flex gap-4 flex-col md:flex-row">
+          {/* Guest name */}
           <FormField
             control={form.control}
             name="guestName"
@@ -210,6 +217,8 @@ export function MeetingForm({
               </FormItem>
             )}
           />
+
+          {/* Guest email */}
           <FormField
             control={form.control}
             name="guestEmail"
@@ -224,6 +233,8 @@ export function MeetingForm({
             )}
           />
         </div>
+
+        {/* Notes */}
         <FormField
           control={form.control}
           name="guestNotes"
