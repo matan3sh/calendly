@@ -55,6 +55,7 @@ export function MeetingForm({
 
   const timezone = form.watch('timezone')
   const date = form.watch('date')
+
   const validTimesInTimezone = useMemo(() => {
     return validTimes.map((date) => toZonedTime(date, timezone))
   }, [validTimes, timezone])
