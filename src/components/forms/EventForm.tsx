@@ -78,17 +78,13 @@ export function EventForm({ event }: EventFormProps) {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex gap-6 flex-col"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {form.formState.errors.root && (
-          <div className="text-destructive text-sm">
+          <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md">
             {form.formState.errors.root.message}
           </div>
         )}
 
-        {/* Event Name */}
         <FormField
           control={form.control}
           name="name"
@@ -96,7 +92,11 @@ export function EventForm({ event }: EventFormProps) {
             <FormItem>
               <FormLabel>Event Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input
+                  {...field}
+                  className="h-11"
+                  placeholder="Quick Meeting"
+                />
               </FormControl>
               <FormDescription>
                 The name users will see when booking
@@ -106,7 +106,6 @@ export function EventForm({ event }: EventFormProps) {
           )}
         />
 
-        {/* Duration */}
         <FormField
           control={form.control}
           name="durationInMinutes"
@@ -114,15 +113,19 @@ export function EventForm({ event }: EventFormProps) {
             <FormItem>
               <FormLabel>Duration</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <div className="relative">
+                  <Input type="number" {...field} className="h-11 pr-16" />
+                  <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-muted-foreground">
+                    mins
+                  </div>
+                </div>
               </FormControl>
-              <FormDescription>In minutes</FormDescription>
+              <FormDescription>Length of the meeting</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        {/* Description */}
         <FormField
           control={form.control}
           name="description"
@@ -130,40 +133,42 @@ export function EventForm({ event }: EventFormProps) {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea className="resize-none h-32" {...field} />
+                <Textarea
+                  {...field}
+                  className="min-h-[120px] resize-none"
+                  placeholder="A brief description of the meeting..."
+                />
               </FormControl>
               <FormDescription>
-                Optional description of the event
+                Help attendees understand the purpose of the meeting
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        {/* Active */}
         <FormField
           control={form.control}
           name="isActive"
           render={({ field }) => (
-            <FormItem>
-              <div className="flex items-center gap-2">
-                <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <FormLabel>Active</FormLabel>
+            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <FormLabel className="text-base">Active</FormLabel>
+                <FormDescription>
+                  Allow users to book this event type
+                </FormDescription>
               </div>
-              <FormDescription>
-                Inactive events will not be visible for users to book
-              </FormDescription>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
             </FormItem>
           )}
         />
 
-        {/* Actions */}
-        <div className="flex gap-2 justify-end">
+        <div className="flex items-center justify-end gap-4 pt-4">
           {event && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -176,10 +181,10 @@ export function EventForm({ event }: EventFormProps) {
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogTitle>Delete Event Type</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    your this event.
+                    This will permanently delete this event type and all
+                    associated bookings. This action cannot be undone.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -197,18 +202,19 @@ export function EventForm({ event }: EventFormProps) {
           )}
 
           <Button
-            disabled={isDeletePending || form.formState.isSubmitting}
             type="button"
-            asChild
             variant="outline"
+            disabled={isDeletePending || form.formState.isSubmitting}
+            asChild
           >
             <Link href="/events">Cancel</Link>
           </Button>
+
           <Button
-            disabled={isDeletePending || form.formState.isSubmitting}
             type="submit"
+            disabled={isDeletePending || form.formState.isSubmitting}
           >
-            Save
+            {form.formState.isSubmitting ? 'Saving...' : 'Save'}
           </Button>
         </div>
       </form>

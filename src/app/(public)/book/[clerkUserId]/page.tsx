@@ -1,15 +1,9 @@
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { db } from '@/drizzle/db'
 import { formatEventDescription } from '@/lib/formatters'
 import { clerkClient } from '@clerk/nextjs/server'
+import { Clock } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
@@ -33,15 +27,16 @@ export default async function BookingPage(props: BookingPageProps) {
   const { fullName } = await clerkClient().users.getUser(clerkUserId)
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <div className="text-4xl md:text-5xl font-semibold mb-4 text-center">
-        {fullName}
+    <div className="max-w-5xl mx-auto px-4 py-12">
+      <div className="text-center mb-12">
+        <h1 className="text-3xl font-semibold mb-4">{fullName}</h1>
+        <p className="text-muted-foreground max-w-xl mx-auto">
+          Welcome to my scheduling page. Please select an event type to proceed
+          with booking.
+        </p>
       </div>
-      <div className="text-muted-foreground mb-6 max-w-sm mx-auto text-center">
-        Welcome to my scheduling page. Please follow the instructions to add an
-        event to my calendar.
-      </div>
-      <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
+
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {events.map((event) => (
           <EventCard key={event.id} {...event} />
         ))}
@@ -66,19 +61,24 @@ function EventCard({
   durationInMinutes,
 }: EventCardProps) {
   return (
-    <Card className="flex flex-col">
-      <CardHeader>
-        <CardTitle>{name}</CardTitle>
-        <CardDescription>
+    <Card className="group hover:shadow-md transition-all duration-200">
+      <div className="p-6">
+        <h3 className="text-lg font-medium mb-2">{name}</h3>
+        <div className="flex items-center text-sm text-muted-foreground mb-4">
+          <Clock className="mr-2 h-4 w-4" />
           {formatEventDescription(durationInMinutes)}
-        </CardDescription>
-      </CardHeader>
-      {description != null && <CardContent>{description}</CardContent>}
-      <CardFooter className="flex justify-end gap-2 mt-auto">
-        <Button asChild>
+        </div>
+
+        {description && (
+          <p className="text-sm text-muted-foreground mb-6 line-clamp-2">
+            {description}
+          </p>
+        )}
+
+        <Button asChild className="w-full group-hover:bg-primary/90">
           <Link href={`/book/${clerkUserId}/${id}`}>Select</Link>
         </Button>
-      </CardFooter>
+      </div>
     </Card>
   )
 }
