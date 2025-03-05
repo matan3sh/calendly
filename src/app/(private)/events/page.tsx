@@ -5,12 +5,7 @@ import { db } from '@/drizzle/db'
 import { formatEventDescription } from '@/lib/formatters'
 import { cn } from '@/lib/utils'
 import { auth } from '@clerk/nextjs/server'
-import {
-  CalendarPlus,
-  CalendarRange,
-  Clock,
-  Link as LinkIcon,
-} from 'lucide-react'
+import { CalendarPlus, CalendarRange, Clock } from 'lucide-react'
 import Link from 'next/link'
 
 export const revalidate = 0
@@ -63,6 +58,15 @@ export default async function EventsPage() {
   )
 }
 
+type EventCardProps = {
+  id: string
+  isActive: boolean
+  name: string
+  description: string | null
+  durationInMinutes: number
+  clerkUserId: string
+}
+
 function EventCard({
   id,
   isActive,
@@ -103,10 +107,7 @@ function EventCard({
               eventId={id}
               clerkUserId={clerkUserId}
               className="text-primary hover:text-primary/80"
-            >
-              <LinkIcon className="mr-1 h-4 w-4" />
-              Copy Link
-            </CopyEventButton>
+            />
           )}
           <Button asChild variant="ghost" size="sm" className="ml-auto">
             <Link href={`/events/${id}/edit`}>Edit</Link>
