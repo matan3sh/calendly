@@ -12,13 +12,25 @@ import { notFound } from 'next/navigation'
 
 export const revalidate = 0
 
-export default async function SuccessPage({
-  params: { clerkUserId, eventId },
-  searchParams: { startTime },
-}: {
-  params: { clerkUserId: string; eventId: string }
-  searchParams: { startTime: string }
-}) {
+export default async function SuccessPage(
+  props: {
+    params: Promise<{ clerkUserId: string; eventId: string }>
+    searchParams: Promise<{ startTime: string }>
+  }
+) {
+  const searchParams = await props.searchParams;
+
+  const {
+    startTime
+  } = searchParams;
+
+  const params = await props.params;
+
+  const {
+    clerkUserId,
+    eventId
+  } = params;
+
   const event = await db.query.EventTable.findFirst({
     where: ({ clerkUserId: userIdCol, isActive, id }, { eq, and }) =>
       and(eq(isActive, true), eq(userIdCol, clerkUserId), eq(id, eventId)),
