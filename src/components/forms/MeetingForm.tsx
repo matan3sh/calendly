@@ -95,11 +95,11 @@ export function MeetingForm({
               <FormLabel>Timezone</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-background">
                     <SelectValue />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent className="bg-background">
                   {Intl.supportedValuesOf('timeZone').map((timezone) => (
                     <SelectItem key={timezone} value={timezone}>
                       {timezone}
@@ -127,7 +127,7 @@ export function MeetingForm({
                       <Button
                         variant="outline"
                         className={cn(
-                          'pl-3 text-left font-normal flex w-full',
+                          'pl-3 text-left font-normal flex w-full bg-background',
                           !field.value && 'text-muted-foreground'
                         )}
                       >
@@ -136,11 +136,14 @@ export function MeetingForm({
                         ) : (
                           <span>Pick a date</span>
                         )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        <CalendarIcon className="ml-auto h-4 w-4" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
+                  <PopoverContent
+                    className="w-auto p-0 bg-background"
+                    align="start"
+                  >
                     <Calendar
                       mode="single"
                       selected={field.value}
@@ -174,7 +177,7 @@ export function MeetingForm({
                   defaultValue={field.value?.toISOString()}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-background">
                       <SelectValue
                         placeholder={
                           date == null || timezone == null
@@ -184,7 +187,7 @@ export function MeetingForm({
                       />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="bg-background">
                     {validTimesInTimezone
                       .filter((time) => isSameDay(time, date))
                       .map((time) => (
@@ -197,7 +200,6 @@ export function MeetingForm({
                       ))}
                   </SelectContent>
                 </Select>
-
                 <FormMessage />
               </FormItem>
             )}
