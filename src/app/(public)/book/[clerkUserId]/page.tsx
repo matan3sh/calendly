@@ -31,8 +31,8 @@ export default async function BookingPage(props: BookingPageProps) {
       <div className="text-center mb-12">
         <h1 className="text-3xl font-semibold mb-4">{fullName}</h1>
         <p className="text-muted-foreground max-w-xl mx-auto">
-          Welcome to my scheduling page. Please select an event type to proceed
-          with booking.
+          Welcome to my scheduling page. Please select an event to proceed with
+          booking.
         </p>
       </div>
 

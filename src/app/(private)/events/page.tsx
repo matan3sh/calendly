@@ -22,11 +22,11 @@ export default async function EventsPage() {
   return (
     <div className="max-w-6xl mx-auto">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <h1 className="text-2xl font-semibold">My Event Types</h1>
+        <h1 className="text-2xl font-semibold">My Events</h1>
         <Button asChild size="lg">
           <Link href="/events/new">
             <CalendarPlus className="mr-2 h-5 w-5" />
-            New Event Type
+            New Event
           </Link>
         </Button>
       </div>
@@ -41,14 +41,14 @@ export default async function EventsPage() {
         <Card className="p-12 text-center">
           <div className="flex flex-col items-center gap-4">
             <CalendarRange className="h-12 w-12 text-primary" />
-            <h3 className="text-lg font-medium">No event types yet</h3>
+            <h3 className="text-lg font-medium">No events yet</h3>
             <p className="text-muted-foreground mb-4">
-              Create your first event type to start accepting bookings
+              Create your first event to start accepting bookings
             </p>
             <Button size="lg" asChild>
               <Link href="/events/new">
                 <CalendarPlus className="mr-2 h-5 w-5" />
-                New Event Type
+                New Event
               </Link>
             </Button>
           </div>

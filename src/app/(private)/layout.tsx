@@ -16,7 +16,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
               </div>
 
               <div className="hidden md:flex items-center space-x-6">
-                <NavLink href="/events">Event Types</NavLink>
+                <NavLink href="/events">Events</NavLink>
                 <NavLink href="/schedule">Scheduled Events</NavLink>
               </div>
             </div>

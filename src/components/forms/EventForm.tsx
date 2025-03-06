@@ -155,7 +155,7 @@ export function EventForm({ event }: EventFormProps) {
               <div className="space-y-0.5">
                 <FormLabel className="text-base">Active</FormLabel>
                 <FormDescription>
-                  Allow users to book this event type
+                  Allow users to book this event
                 </FormDescription>
               </div>
               <FormControl>
@@ -181,10 +181,10 @@ export function EventForm({ event }: EventFormProps) {
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Delete Event Type</AlertDialogTitle>
+                  <AlertDialogTitle>Delete Event</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This will permanently delete this event type and all
-                    associated bookings. This action cannot be undone.
+                    This will permanently delete this event and all associated
+                    bookings. This action cannot be undone.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
